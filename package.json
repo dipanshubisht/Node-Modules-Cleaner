@@ -1,12 +1,45 @@
 {
+  "name": "@dipanshubisht/node-modules-cleaner",
+  "version": "1.0.0",
+  "description": "A utility to find and delete all top-level node_modules folders in a directory tree",
   "type": "module",
-  "scripts": {
-    "clean": "node --loader ts-node/esm clean-node-modules.ts"
+  "main": "dist/clean-node-modules.js",
+  "bin": {
+    "node-modules-cleaner": "dist/cli.js"
   },
+  "scripts": {
+    "clean": "node --loader ts-node/esm clean-node-modules.ts",
+    "build": "tsc",
+    "prepublishOnly": "npm run build",
+    "start": "node dist/cli.js",
+    "test": "echo \"Running in test mode...\" && node --loader ts-node/esm clean-node-modules.ts --test"
+  },
+  "keywords": [
+    "node_modules",
+    "cleanup",
+    "disk-space",
+    "utility",
+    "cleaner"
+  ],
+  "author": "Dipanshu Bisht",
+  "license": "MIT",
   "dependencies": {
+    "rimraf": "^6.0.1"
+  },
+  "devDependencies": {
     "@types/rimraf": "^3.0.2",
-    "rimraf": "^6.0.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.3"
-  }
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dipanshubisht/Node-Mudules-Cleaner.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dipanshubisht/Node-Mudules-Cleaner/issues"
+  },
+  "homepage": "https://github.com/dipanshubisht/Node-Mudules-Cleaner#readme"
 }

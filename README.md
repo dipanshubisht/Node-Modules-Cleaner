@@ -14,26 +14,55 @@ This tool:
 
 ## Installation
 
+### Global Installation (Recommended)
+
+```bash
+# Install globally
+npm install -g @dipanshubisht/node-modules-cleaner
+```
+
+After installing globally, you can use the command `node-modules-cleaner` from anywhere.
+
+### Local Installation
+
+```bash
+# Install locally in a project
+npm install @dipanshubisht/node-modules-cleaner
+```
+
+### From Source
+
 ```bash
 # Clone the repository
-git clone <your-repo-url>
-cd node-modules-cleaner
+git clone https://github.com/dipanshubisht/Node-Mudules-Cleaner.git
+cd Node-Mudules-Cleaner
 
 # Install dependencies
 npm install
+
+# Build the project
+npm run build
 ```
 
 ## Usage
 
-Run the cleaner on a specific directory:
+### If installed globally:
 
 ```bash
-npm run clean -- /path/to/directory
+# Clean node_modules in a specific directory
+node-modules-cleaner /path/to/directory
+
+# Clean node_modules in the current directory
+node-modules-cleaner
 ```
 
-Or run it on the current directory:
+### If installed locally or from source:
 
 ```bash
+# Using npm script on a specific directory
+npm run clean -- /path/to/directory
+
+# Using npm script on the current directory
 npm run clean
 ```
 
@@ -41,13 +70,13 @@ npm run clean
 
 ```bash
 # Clean node_modules in your home directory
-npm run clean -- ~/
+node-modules-cleaner ~/
 
 # Clean node_modules in a specific project
-npm run clean -- ~/projects/my-project/
+node-modules-cleaner ~/projects/my-project/
 
 # Clean node_modules in the current directory
-npm run clean
+node-modules-cleaner
 ```
 
 ## How it works
@@ -58,4 +87,4 @@ After finding all top-level `node_modules` folders, it displays them and asks fo
 
 ## License
 
-MIT 
+MIT

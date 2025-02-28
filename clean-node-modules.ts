@@ -5,8 +5,10 @@ import { rimraf } from 'rimraf';
 /**
  * Deletes all top-level node_modules folders in a given directory
  * "Top-level" means node_modules folders that are not contained within another node_modules folder
+ * @param rootDir The directory to search for node_modules folders
+ * @param testMode If true, will only list folders but not delete them
  */
-function cleanTopLevelNodeModules(rootDir: string): void {
+export function cleanTopLevelNodeModules(rootDir: string, testMode = false): void {
   // Ensure directory exists
   if (!fs.existsSync(rootDir)) {
     console.error(`Directory does not exist: ${rootDir}`);
@@ -14,6 +16,10 @@ function cleanTopLevelNodeModules(rootDir: string): void {
   }
 
   console.log(`Searching for top-level node_modules in: ${rootDir}`);
+  if (testMode) {
+    console.log('Running in TEST MODE - no files will be deleted');
+  }
+  
   const nodeModulesFolders: string[] = [];
 
   // Find all node_modules folders
@@ -56,6 +62,12 @@ function cleanTopLevelNodeModules(rootDir: string): void {
     console.log(`- ${folder}`);
   });
 
+  // In test mode, just exit after listing folders
+  if (testMode) {
+    console.log('\nTest mode - no folders will be deleted.');
+    return;
+  }
+
   // Confirm deletion
   console.log('\nProceed with deletion? (y/n)');
   process.stdin.once('data', async (data) => {
@@ -85,6 +97,15 @@ function cleanTopLevelNodeModules(rootDir: string): void {
   });
 }
 
-// Get directory from command line argument or use current directory
-const targetDir = process.argv[2] || process.cwd();
-cleanTopLevelNodeModules(targetDir);
+// If this file is run directly, execute the function
+if (import.meta.url === `file://${process.argv[1]}`) {
+  // Check for test mode flag
+  const testMode = process.argv.includes('--test');
+  
+  // Get directory from command line argument or use current directory
+  // Filter out the --test flag if present
+  const args = process.argv.filter(arg => arg !== '--test');
+  const targetDir = args[2] || process.cwd();
+  
+  cleanTopLevelNodeModules(targetDir, testMode);
+}
