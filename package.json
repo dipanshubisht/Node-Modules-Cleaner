@@ -1,0 +1,12 @@
+{
+  "type": "module",
+  "scripts": {
+    "clean": "node --loader ts-node/esm clean-node-modules.ts"
+  },
+  "dependencies": {
+    "@types/rimraf": "^3.0.2",
+    "rimraf": "^6.0.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.3"
+  }
+}
