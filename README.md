@@ -81,7 +81,7 @@ node-modules-cleaner
 
 ## How it works
 
-The script recursively traverses the directory structure, identifying all `node_modules` folders. It keeps track of whether it's already inside a `node_modules` folder to avoid deleting nested ones.
+The script recursively traverses the directory structure, identifying all `node_modules` folders. It keeps track of whether it's already inside a `node_modules` folder to avoid deleting nested ones. The script also ignores dotfiles (e.g. `.git`, `.vscode`) and the `.trash` folder.
 
 After finding all top-level `node_modules` folders, it displays them and asks for confirmation before deletion.
 

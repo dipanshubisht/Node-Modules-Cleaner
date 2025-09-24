@@ -28,6 +28,11 @@ export function cleanTopLevelNodeModules(rootDir: string, testMode = false): voi
       const items = fs.readdirSync(dir);
       
       for (const item of items) {
+        // Ignore dotfiles and .trash folder
+        if (item.startsWith('.') || item === '.trash') {
+          continue;
+        }
+
         const itemPath = path.join(dir, item);
         const isDirectory = fs.statSync(itemPath).isDirectory();
         

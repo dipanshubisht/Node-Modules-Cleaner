@@ -1,6 +1,6 @@
 {
   "name": "@dipanshubisht/node-modules-cleaner",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A utility to find and delete all top-level node_modules folders in a directory tree",
   "type": "module",
   "main": "dist/clean-node-modules.js",
