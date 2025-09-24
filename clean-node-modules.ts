@@ -20,21 +20,50 @@ export function cleanTopLevelNodeModules(rootDir: string, testMode = false): voi
     console.log('Running in TEST MODE - no files will be deleted');
   }
   
-  const nodeModulesFolders: string[] = [];
+  const ignoredDirs = [
+    '.git',
+    '.vscode',
+    'dist',
+    'build',
+    'coverage',
+    // Mac-specific folders
+    'Applications',
+    'Library',
+    'System',
+    'Users',
+    '.Trash',
+    // Other common folders to ignore
+    'vendor',
+    'tmp',
+    'temp'
+  ];
 
   // Find all node_modules folders
   function findNodeModules(dir: string, isInsideNodeModules: boolean = false): void {
+    // Skip ignored directories
+    if (ignoredDirs.includes(path.basename(dir))) {
+      return;
+    }
+
     try {
       const items = fs.readdirSync(dir);
-      
+
       for (const item of items) {
-        // Ignore dotfiles and .trash folder
-        if (item.startsWith('.') || item === '.trash') {
+        // Ignore dotfiles
+        if (item.startsWith('.')) {
           continue;
         }
 
         const itemPath = path.join(dir, item);
-        const isDirectory = fs.statSync(itemPath).isDirectory();
+        let isDirectory: boolean;
+
+        try {
+          isDirectory = fs.statSync(itemPath).isDirectory();
+        } catch (err) {
+          // Ignore errors (e.g., permission denied)
+          console.error(`Could not stat ${itemPath}: ${err}`);
+          continue;
+        }
         
         if (isDirectory) {
           // If this is a node_modules directory and not inside another node_modules
